@@ -1,5 +1,5 @@
 from models._etsne import ET_SNE,  ETSNE #Those Class are  found in section 1
-from dataset import data_load, seed_  # Those Fuction are in section 2
+from dataset import data_load, seed_  # Those Fuctions are found in section 2
 import matplotlib.pyplot as plt
 
 
