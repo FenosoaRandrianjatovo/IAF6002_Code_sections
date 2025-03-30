@@ -37,14 +37,34 @@ class ET_SNE:
     
     def prob_high_dim(self, dist, sigma, dist_row):
         """
-        For each row of Euclidean distance matrix (dist_row) compute
-        probability in high dimensions (1D array)
+        Compute the high-dimensional conditional probability for a specific row of a distance matrix.
+    
+        This function calculates the probability distribution for one row of a Euclidean distance
+        matrix based on a Gaussian (RBF) kernel. It computes the unnormalized probabilities for each
+        element in the specified row (except for the diagonal element, which is set to zero), and then
+        normalizes these probabilities so that they sum to 1.
+    
+        Parameters
+        ----------
+        dist : np.ndarray
+            A 2D array representing the pairwise Euclidean distances between data points.
+        sigma : float
+            The standard deviation of the Gaussian kernel, used to scale the distances.
+        dist_row : int
+            The index of the row in the distance matrix for which the probability distribution is computed.
+    
+        Returns
+        -------
+        np.ndarray
+            A 1D array containing the normalized probabilities for the specified row, where the probability
+            corresponding to the self-distance is zero.
         """
-        exp_distance = np.exp(-dist[dist_row] / (2*sigma**2))
+        exp_distance = np.exp(-dist[dist_row] / (2 * sigma**2))
         exp_distance[dist_row] = 0
         prob_not_symmetr = exp_distance / np.sum(exp_distance)
-        #prob_symmetr = (prob_not_symmetr + prob_not_symmetr.T) / (2*n_samples)
+        
         return prob_not_symmetr
+
     
   
     def _perplexity(self,prob):
