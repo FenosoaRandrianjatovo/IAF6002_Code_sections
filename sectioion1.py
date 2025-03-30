@@ -3,19 +3,45 @@ from sklearn.metrics.pairwise import euclidean_distances
 
 
 class ET_SNE:
-    def __init__(self, n_components=2, perplexity=30.0, learning_rate=200.0, n_iter=1000, random_state=42, verbose=False):
+    def __init__(self, n_components=2, perplexity=30.0, learning_rate=0.05, n_iter=1000, random_state=42, verbose=False):
         """
-        Parameters:
-        n_components : int
-            Number of dimensions to reduce to.
-        perplexity : float
-            Perplexity parameter for t-SNE.
-        learning_rate : float
-            Learning rate for optimization.
-        n_iter : int
-            Number of iterations for optimization.
-        random_state : int or None
-            Random seed for reproducibility.
+        Initialize the Et-SNE model with specified parameters.
+    
+        Parameters
+        ----------
+        n_components : int, default=2
+            The number of dimensions for the low-dimensional embedding.
+        perplexity : float, default=30.0
+            The perplexity parameter, which balances attention between local and global aspects of the data.
+        learning_rate : float, default=0.05
+            The learning rate used during gradient descent optimization.
+        n_iter : int, default=1000
+            The total number of iterations for optimization.
+        random_state : int or None, default=42
+            The seed for random number generation to ensure reproducibility.
+        verbose : bool, default=False
+            If True, prints progress messages during computation.
+    
+        Attributes
+        ----------
+        embedding_ : None or np.ndarray
+            The computed low-dimensional embedding after fitting the model. Initialized as None.
+        kl_divergence_ : None or np.ndarray
+            The history of Kullback-Leibler divergence values over iterations. Initialized as None.
+        initialized : bool
+            Flag indicating whether the model has been initialized. Defaults to False.
+        data : None
+            Placeholder for input data. Initialized as None.
+        distances : None
+            Placeholder for computed pairwise distances. Initialized as None.
+        pairwise_distances : None
+            Placeholder for the pairwise distance matrix. Initialized as None.
+        pairwise_distances_squared : None
+            Placeholder for the squared pairwise distance matrix. Initialized as None.
+        n_samples : None or int
+            The number of samples in the dataset. Initialized as None.
+        n_features : None or int
+            The number of features in the dataset. Initialized as None.
         """
         # Initialize parameters
         self.n_components = n_components
