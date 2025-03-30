@@ -32,7 +32,7 @@ f(x_j \mid x_i) = \frac{1}{(2\pi\sigma_i^2)^{d/2}} \exp\left(-\frac{\|x_i - x_j\
 $$
 
 - **Centre :** La gaussienne est centrée en $x_i$, ce qui signifie que la similarité est basée sur la distance $\|x_i - x_j\|$.
-- **Variance :** La variance $\sigma_i^2$ est spécifique à \(x_i\) et est choisie via une recherche de perplexité pour refléter la densité locale autour de $x_i$.
+- **Variance :** La variance $\sigma_i^2$ est spécifique à $x_i$ et est choisie via une recherche de perplexité pour refléter la densité locale autour de $x_i$.
 - **Constante de normalisation :** La constante $\frac{1}{(2\pi\sigma_i^2)^{d/2}}$ s'annule lors de la formation des probabilités conditionnelles, de sorte que nous nous concentrons sur le terme exponentiel. C'est pourquoi cela ressemble à un noyau gaussien.
 
 En utilisant cette hypothèse gaussienne, la probabilité conditionnelle que le point $x_i$ choisisse $x_j$ comme voisin est définie en normalisant le terme exponentiel sur tous les autres points :
