@@ -9,8 +9,10 @@ if __name__ == "__main__":
     name = "make_blobs"
     # name = "retina"
 
-    X_samples,  labels, dataloader, data_tensor, dataloader_full = data_load(data_name = name,  n_samples=8000, n_features=30, centers=5, cluster_std=1.0)
+    X,  labels, dataloader, data_tensor, dataloader_full = data_load(data_name = name,  n_samples=8000, n_features=30, centers=5, cluster_std=1.0)
     # y= labels
+    X_samples = X.numpy()
+    
     model = ET_SNE(n_components=2, perplexity=30, n_iter=400, random_state=128, learning_rate=0.6, verbose=True)
     y, KL_array = model.fit_trasform(X_samples)
     plt.figure(figsize=(10,7))
