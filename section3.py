@@ -57,7 +57,7 @@ if __name__ == "__main__":
     plt.xlabel("Iteration", fontsize=10)
     plt.ylabel("KL-Divergence", fontsize=10) 
     plt.savefig("KL_divergence.png")
-    plt.close()
+    plt.close()  #The image will be saved directly without appearing in the  IDE
     
     # Visualize and save the 2D t-SNE embedding with points colored by their labels
     plt.figure(figsize=(10, 7))
@@ -66,5 +66,5 @@ if __name__ == "__main__":
     plt.xlabel("tSNE1", fontsize=10)
     plt.ylabel("tSNE2", fontsize=10)
     plt.savefig("tSNE.png")
-    plt.close() #The image will be saved directly without appearing in the  IDE
+    plt.close() 
 
