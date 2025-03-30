@@ -1,4 +1,4 @@
-from models._etsne import T_SNE,  ETSNE
+from models._etsne import ET_SNE,  ETSNE
 from dataset import data_load, seed_
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     )
     X_samples = pd.DataFrame(df).values
     # y= labels
-    model = T_SNE(n_components=2, perplexity=30, n_iter=400, random_state=128, learning_rate=0.6, verbose=True)
+    model = ET_SNE(n_components=2, perplexity=30, n_iter=400, random_state=128, learning_rate=0.6, verbose=True)
     y, KL_array = model.fit_trasform(X_samples)
     plt.figure(figsize=(10,7))
     plt.plot(KL_array)
