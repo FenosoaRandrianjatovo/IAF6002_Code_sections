@@ -91,10 +91,26 @@ class ET_SNE:
 
     
     
-    def sigma_binary_search(self,perp_of_sigma, fixed_perplexity):
+    def sigma_binary_search(self, perp_of_sigma, fixed_perplexity):
         """
-        Solve equation perp_of_sigma(sigma) = fixed_perplexity 
-        with respect to sigma by the binary search algorithm
+        Find the sigma value that yields the target perplexity using a binary search algorithm.
+    
+        This function solves the equation perp_of_sigma(sigma) = fixed_perplexity by iteratively 
+        refining the search interval for sigma. The binary search is performed for up to 20 iterations, 
+        and the process terminates early if the absolute difference between the computed and target 
+        perplexity is within a tolerance of 1e-5.
+    
+        Parameters
+        ----------
+        perp_of_sigma : callable
+            A function that takes a sigma value (float) as input and returns the corresponding perplexity.
+        fixed_perplexity : float
+            The target perplexity value that the sigma should approximate.
+    
+        Returns
+        -------
+        float
+            The sigma value that approximately satisfies the equation perp_of_sigma(sigma) = fixed_perplexity.
         """
         sigma_lower_limit = 0
         sigma_upper_limit = 1000
@@ -107,7 +123,7 @@ class ET_SNE:
             if np.abs(fixed_perplexity - perp_of_sigma(approx_sigma)) <= 1e-5:
                 break
         return approx_sigma
-    
+
 
     def binary_search_sigma(self, dist):
         """
