@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 if __name__ == "__main__":
 
     name = "make_blobs"
+    # name = "retina"
 
     X_samples,  labels, dataloader, data_tensor, dataloader_full = data_load(data_name = name,  n_samples=8000, n_features=30, centers=5, cluster_std=1.0)
     # y= labels
