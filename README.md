@@ -12,3 +12,64 @@
     </td>
   </tr>
 </table>
+
+
+
+\section*{Section 1}
+
+\noindent L’objectif de cette \textbf{\href{https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/sectioion1.py}{section 1}}est de coder les équations (1) à (6), qui servent à minimiser la divergence de Kullback-Leibler, et d’enregistrer leurs valeurs pour observer leur décroissance. \\
+
+\subsection{Formulation mathématique du problème }
+\noindent Dans Et-SNE, la similarité entre des points en haute dimension est mesurée à l'aide de probabilités conditionnelles calculées via un noyau gaussien. \\
+
+\noindent  \textbf{Hypothèse du modèle gaussien}\\
+
+\noindent Pour chaque point de données en haute dimension \(x_i \in \mathbb{R}^d\), nous supposons que la similarité de tout autre point \(x_j\) est donnée par une densité gaussienne centrée en \(x_i\) avec une variance \(\sigma_i^2\). Autrement dit, nous modélisons la densité de probabilité (non normalisée) comme :
+\begin{equation*}
+f(x_j \mid x_i) = \frac{1}{(2\pi\sigma_i^2)^{d/2}} \exp\!\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right).
+\end{equation*}
+
+\begin{itemize}
+  \item \textbf{Centre :} La gaussienne est centrée en \(x_i\), ce qui signifie que la similarité est basée sur la distance \(\|x_i - x_j\|\).
+  \item \textbf{Variance :} La variance \(\sigma_i^2\) est spécifique à \(x_i\) et est choisie via une recherche de perplexité pour refléter la densité locale autour de \(x_i\).
+  \item \textbf{Constante de normalisation :} La constante \(\frac{1}{(2\pi\sigma_i^2)^{d/2}}\) s'annule lors de la formation des probabilités conditionnelles, de sorte que nous nous concentrons sur le terme exponentiel. C'est pourquoi cela ressemble à un noyau gaussien.
+\end{itemize}
+
+\noindent En utilisant cette hypothèse gaussienne, la probabilité conditionnelle que le point \(x_i\) choisisse \(x_j\) comme voisin est définie en normalisant le terme exponentiel sur tous les autres points :
+\begin{equation}
+    p_{j|i} = \frac{\exp\!\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right)}{\sum_{k \neq i} \exp\!\left(-\frac{\|x_i - x_k\|^2}{2\sigma_i^2}\right)}.
+\end{equation}
+Pour obtenir une probabilité jointe symétrique entre \(x_i\) et \(x_j\), t-SNE définit
+\begin{equation}
+    p_{ij} = \frac{p_{j|i} + p_{i|j}}{2n},
+\end{equation}
+
+\noindent On définit la similarité dans l’espace de basse dimension comme suit :
+ \begin{equation}
+q_{ij} = \frac{\left(1 + \|y_i - y_j\|^2\right)^{-1}}{\sum_{k \ne l} \left(1 + \|y_k - y_l\|^2\right)^{-1}}
+\end{equation}
+
+\begin{equation}
+C = \text{KL}(P\|Q) = \sum_{i\neq j} p_{ij} \log \frac{p_{ij}}{q_{ij}}.
+\end{equation}
+Pour un  \(p_{ij}\) fixé, on peut ignorer les termes constants. 
+\begin{equation}
+C =    \sum_{i\neq j} p_{ij} \log p_{ij} -\sum_{i\neq j} p_{ij} \log q_{ij}
+\end{equation}
+Donc le Gradient est : 
+\begin{equation}
+\frac{\partial C}{\partial y_i} = 4 \sum_{j} (p_{ij} - q_{ij})\, (y_i-y_j) (1+\|y_i-y_j\|^2)^{-1}  \,
+\end{equation}
+
+\section*{Section 2}
+
+\noindent L’objectif de cette \textbf{\href{https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section2.py}{section 2}} est de créer des fonctions permettant de charger les données synthétiques et les données réelles, en utilisant la bibliothèque \texttt{scanpy} pour le traitement des données réelles de \texttt{scVI}.  \\
+
+\noindent À la fin du script, j’ai également créé une fonction qui permet de reproduire les résultats en fixant les graines aléatoires (\textit{seed}) pour \texttt{numpy}, \texttt{torch}, \texttt{cnn} et \texttt{random}.
+
+\section*{Section 3}
+
+\noindent L’objectif de cette \textbf{\href{https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section3.py}{section 3}} est d’évaluer les performances de l’algorithme en réutilisant les modules implémentés dans les sections 1 et 2. Les courbes de la divergence de Kullback-Leibler ainsi que les projections en deux dimensions sont ensuite générées et sauvegardées pour une analyse visuelle.
+
+
+
