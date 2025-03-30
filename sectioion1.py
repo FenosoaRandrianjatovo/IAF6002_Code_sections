@@ -1,9 +1,5 @@
 import numpy as np
-from scipy.spatial.distance import pdist, squareform
-import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import euclidean_distances
-from sklearn.datasets import make_blobs
 
 
 class ET_SNE:
