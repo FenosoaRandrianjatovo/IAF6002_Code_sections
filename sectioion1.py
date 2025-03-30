@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.datasets import make_blobs
 
 
-class T_SNE:
+class ET_SNE:
     def __init__(self, n_components=2, perplexity=30.0, learning_rate=200.0, n_iter=1000, random_state=42, verbose=False):
         """
         Parameters:
