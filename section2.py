@@ -66,7 +66,7 @@ def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=1
       - 'make_blobs': Generates a synthetic dataset with blob clusters.
       - 'MNIST': Loads the MNIST handwritten digits dataset.
       - 'cortex', 'pbmc', 'retina', 'heart_cell_atlas': Loads corresponding single-cell datasets using scvi and applies a preprocessing step.
-      - Any other value is treated as a file path to a CSV file, where the last column is assumed to contain labels.
+      - Any other value of data_name is treated as a file path to a CSV file, where the last column is assumed to contain labels.
 
     For synthetic datasets ('Two_moons' and 'make_blobs'), parameters such as `n_samples`, `n_features`, 
     `centers`, and `cluster_std` control the characteristics of the generated data.
