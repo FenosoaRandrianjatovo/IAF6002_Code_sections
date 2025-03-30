@@ -17,8 +17,7 @@
 
 # Section 1
 
-**L’objectif de cette [section 1](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/sectioion1.py)**  
-est de coder les équations (1) à (6), qui servent à minimiser la divergence de Kullback-Leibler, et d’enregistrer leurs valeurs pour observer leur décroissance.
+**L’objectif de cette [section 1](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/sectioion1.py)**   est de coder les équations (1) à (6), qui servent à minimiser la divergence de Kullback-Leibler, et d’enregistrer leurs valeurs pour observer leur décroissance.
 
 ## Formulation mathématique du problème
 
@@ -26,7 +25,7 @@ Dans Et-SNE, la similarité entre des points en haute dimension est mesurée à 
 
 **Hypothèse du modèle gaussien**
 
-Pour chaque point de données en haute dimension \(x_i \in \mathbb{R}^d\), nous supposons que la similarité de tout autre point \(x_j\) est donnée par une densité gaussienne centrée en \(x_i\) avec une variance \(\sigma_i^2\). Autrement dit, nous modélisons la densité de probabilité (non normalisée) comme :
+Pour chaque point de données en haute dimension $x_i \in \mathbb{R}^d$, nous supposons que la similarité de tout autre point $x_j$ est donnée par une densité gaussienne centrée en $x_i$ avec une variance $\sigma_i^2$. Autrement dit, nous modélisons la densité de probabilité (non normalisée) comme :
 
 $$
 f(x_j \mid x_i) = \frac{1}{(2\pi\sigma_i^2)^{d/2}} \exp\!\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right).
