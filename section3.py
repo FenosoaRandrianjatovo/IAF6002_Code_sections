@@ -51,18 +51,18 @@ if __name__ == "__main__":
     y, KL_array = model.fit_trasform(X_samples)
     
     # Visualize and save  the KL divergence over iterations
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(10, 7)) #Size of the plot
     plt.plot(KL_array)
     plt.title("KL-divergence", fontsize=10)
     plt.xlabel("Iteration", fontsize=10)
-    plt.ylabel("KL-Divergence", fontsize=10)
+    plt.ylabel("KL-Divergence", fontsize=10) # size of the text inside  the images is 10
     plt.savefig("KL_divergence.png")
     plt.close()
     
     # Visualize and save the 2D t-SNE embedding with points colored by their labels
     plt.figure(figsize=(10, 7))
-    plt.scatter(y[:, 0], y[:, 1], c=labels.astype(int), cmap='tab10', s=10)
-    plt.title("tSNE from Scratch", fontsize=10)
+    plt.scatter(y[:, 0], y[:, 1], c=labels.astype(int), cmap='tab10', s=10), #Size of the points in the images
+    plt.title("tSNE from Scratch", fontsize=10) # size of the text inside  the images is 10
     plt.xlabel("tSNE1", fontsize=10)
     plt.ylabel("tSNE2", fontsize=10)
     plt.savefig("tSNE.png")
