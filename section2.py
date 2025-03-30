@@ -197,8 +197,23 @@ def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=1
 
     return X, labels, dataloader, data_tensor, dataloader_full
 
-
 def seed_(num):
+    """
+    Set the random seed for reproducibility across PyTorch, NumPy, and Python's random module.
+
+    This function configures multiple libraries to use a fixed seed, ensuring that experiments
+    can be reproduced exactly. It performs the following actions:
+      - Sets the seed for PyTorch's CPU operations.
+      - Sets the seed for PyTorch's CUDA operations (for a single GPU and all GPUs).
+      - Seeds NumPy's random number generator.
+      - Configures PyTorch's cuDNN backend to disable benchmarking and enable deterministic behavior.
+      - Seeds Python's built-in random module.
+
+    Parameters
+    ----------
+    num : int
+        The seed value to be used for all random number generators.
+    """
     torch.manual_seed(num)
     torch.cuda.manual_seed(num)
     torch.cuda.manual_seed_all(num)
