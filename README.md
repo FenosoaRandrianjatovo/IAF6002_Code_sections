@@ -71,14 +71,12 @@ $$
 
 # Section 2
 
-**L’objectif de cette [section 2](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section2.py)**  
-est de créer des fonctions permettant de charger les données synthétiques et les données réelles, en utilisant la bibliothèque `scanpy` pour le traitement des données réelles de `scVI`.
+**L’objectif de cette [section 2](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section2.py)**   est de créer des fonctions permettant de charger les données synthétiques et les données réelles, en utilisant la bibliothèque `scanpy` pour le traitement des données réelles de `scVI`.
 
 À la fin du script, j’ai également créé une fonction qui permet de reproduire les résultats en fixant les graines aléatoires (*seed*) pour `numpy`, `torch`, `cnn` et `random`.
 
 # Section 3
 
-**L’objectif de cette [section 3](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section3.py)**  
-est d’évaluer les performances de l’algorithme en réutilisant les modules implémentés dans les sections 1 et 2. Les courbes de la divergence de Kullback-Leibler ainsi que les projections en deux dimensions sont ensuite générées et sauvegardées pour une analyse visuelle.
+**L’objectif de cette [section 3](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/section3.py)**   est d’évaluer les performances de l’algorithme en réutilisant les modules implémentés dans les sections 1 et 2. Les courbes de la divergence de Kullback-Leibler ainsi que les projections en deux dimensions sont ensuite générées et sauvegardées pour une analyse visuelle.
 
 
