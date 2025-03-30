@@ -1,0 +1,128 @@
+# Description: This file contains the functions for preprocessing the datasets and loading the data.
+import scanpy as sc
+import torch
+import numpy as np
+import pandas as pd
+import torch.backends.cudnn as cudnn
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+import random
+from torch.utils.data import DataLoader, TensorDataset
+
+
+def preprocessing(adata, batch_key=None):
+    """Preprocesses the dataset by filtering genes, normalizing, and selecting highly variable genes."""
+    sc.pp.filter_genes(adata, min_counts=3)
+    adata.layers["counts"] = adata.X.copy()  # Preserve counts
+    sc.pp.normalize_total(adata, target_sum=1e4)
+    sc.pp.log1p(adata)
+    adata.raw = adata  # Freeze the state in `.raw`
+    
+    sc.pp.highly_variable_genes(
+        adata,
+        n_top_genes=1200,
+        subset=True,
+        layer="counts",
+        flavor="seurat_v3",
+        batch_key=batch_key
+    )
+    return adata
+
+
+def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=100, centers=5, cluster_std=1.0):
+    """Loads synthetic data or other datasets as specified."""
+    
+    covariate = torch.empty(0)
+    batch = None
+
+    if data_name == 'Two_moons':
+        from sklearn.datasets import make_moons
+        df, labels = make_moons(n_samples=n_samples, noise = 0.05, shuffle = False, random_state = 42)
+    elif data_name =="iris":
+        from sklearn.datasets import load_iris
+        import pandas as pd
+
+        # Load the Iris dataset
+        data = load_iris()
+        df = pd.DataFrame(data.data, columns=data.feature_names).values
+        labels = data.target
+
+    elif data_name =="make_blobs":
+
+        from sklearn.datasets import make_blobs
+        df, labels = make_blobs(
+            n_samples=n_samples, # Total number of samples
+            n_features=n_features, #Number of features
+            centers= centers, #Number of classes
+            cluster_std=cluster_std,  # Adjust for more or less separation
+            random_state=42
+        )
+
+
+    elif data_name == 'MNIST':
+        from torchvision import datasets, transforms
+        MNIST = datasets.MNIST('./mnist', train=True, download=True, transform=transforms.ToTensor())
+        df = MNIST.data.view(60000,28*28).to(torch.float) / 255
+        df = df.apply_(lambda x: 1 if x>= 0.5 else 0)
+        labels = MNIST.targets
+
+    elif data_name == 'cortex':
+        import scvi
+        adata = scvi.data.cortex()
+        preprocessing(adata)
+        df = adata.layers['counts']
+        labels = adata.obs['cell_type']
+
+    elif data_name == 'pbmc':
+        import scvi
+        adata = scvi.data.pbmc_dataset()
+        preprocessing(adata)
+        df = adata.layers['counts'].toarray()
+        labels = adata.obs['str_labels']
+
+    elif data_name == 'retina':
+        import scvi
+        from torch.nn import functional as F
+        adata = scvi.data.retina()
+        preprocessing(adata)
+        df = adata.layers['counts']
+        labels = adata.obs['labels']
+        batch = LabelEncoder().fit_transform(adata.obs['batch'])
+
+
+    elif data_name == 'heart_cell_atlas':
+        import scvi
+        from torch.nn import functional as F
+        adata = scvi.data.heart_cell_atlas_subsampled()
+        preprocessing(adata)
+        df = adata.layers['counts'].toarray()
+        labels = adata.obs['cell_type']
+ 
+    
+    else:
+      import pandas as pd
+      df = pd.read_csv(data_name).values
+      labels =df[:,-1] #
+
+      df = df[:,:-1]
+
+    X = torch.Tensor(df)
+    # labels = torch.Tensor(labels).to(torch.int64)
+
+    # Define the dataset and data loader    
+    data_tensor = torch.tensor(X, dtype=torch.float32)
+    batch_size = batch_size
+    dataset = TensorDataset(data_tensor)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    dataloader_full = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
+
+    return X, labels, dataloader, data_tensor, dataloader_full
+
+
+def seed_(num):
+    torch.manual_seed(num)
+    torch.cuda.manual_seed(num)
+    torch.cuda.manual_seed_all(num)
+    np.random.seed(num)
+    cudnn.benchmark = False
+    cudnn.deterministic = True
+    random.seed(num)
