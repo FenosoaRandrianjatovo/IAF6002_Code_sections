@@ -56,7 +56,61 @@ def preprocessing(adata, batch_key=None):
 
 
 def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=100, centers=5, cluster_std=1.0):
-    """Loads synthetic data or other datasets as specified."""
+    """
+    Load and prepare a dataset along with corresponding DataLoader objects for model training.
+
+    This function supports loading both synthetic and real datasets based on the provided `data_name`. 
+    Supported dataset identifiers include:
+      - 'Two_moons': Generates a two-moons synthetic dataset.
+      - 'iris': Loads the Iris dataset.
+      - 'make_blobs': Generates a synthetic dataset with blob clusters.
+      - 'MNIST': Loads the MNIST handwritten digits dataset.
+      - 'cortex', 'pbmc', 'retina', 'heart_cell_atlas': Loads corresponding single-cell datasets using scvi and applies a preprocessing step.
+      - Any other value is treated as a file path to a CSV file, where the last column is assumed to contain labels.
+
+    For synthetic datasets ('Two_moons' and 'make_blobs'), parameters such as `n_samples`, `n_features`, 
+    `centers`, and `cluster_std` control the characteristics of the generated data.
+
+    Parameters
+    ----------
+    data_name : str
+        Identifier for the dataset to load. Can be one of the predefined dataset names or a file path to a CSV file.
+    batch_size : int, optional
+        Batch size to be used in the DataLoader. Default is 16.
+    cov : bool, optional
+        Unused parameter reserved for potential covariate handling. Default is False.
+    n_samples : int, optional
+        Number of samples to generate for synthetic datasets. Default is 40000.
+    n_features : int, optional
+        Number of features for synthetic datasets generated with 'make_blobs'. Default is 100.
+    centers : int, optional
+        Number of centers (clusters) for the 'make_blobs' dataset. Default is 5.
+    cluster_std : float, optional
+        Standard deviation of clusters for the 'make_blobs' dataset. Default is 1.0.
+
+    Returns
+    -------
+    X : torch.Tensor
+        Tensor of features created from the dataset.
+    labels : array-like
+        Array or tensor of labels corresponding to the data.
+    dataloader : torch.utils.data.DataLoader
+        DataLoader for iterating over the dataset in batches (shuffled).
+    data_tensor : torch.Tensor
+        Torch tensor containing the dataset, explicitly cast to float32.
+    dataloader_full : torch.utils.data.DataLoader
+        DataLoader containing the entire dataset (batch size equals dataset size), not shuffled.
+
+    Notes
+    -----
+    - For single-cell datasets (e.g., 'cortex', 'pbmc', 'retina', 'heart_cell_atlas'), a preprocessing 
+      routine is applied prior to data extraction.
+    - When `data_name` is not one of the predefined dataset names, the function attempts to load the data 
+      from a CSV file. In this case, the last column is assumed to be the label, and the remaining columns 
+      form the feature matrix.
+    - Some branches (e.g., handling of covariates or batch effects) may be partially implemented or reserved 
+      for future extension.
+    """
     
     covariate = torch.empty(0)
     batch = None
