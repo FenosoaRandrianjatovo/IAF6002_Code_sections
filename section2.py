@@ -108,8 +108,7 @@ def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=1
     - When `data_name` is not one of the predefined dataset names, the function attempts to load the data 
       from a CSV file. In this case, the last column is assumed to be the label, and the remaining columns 
       form the feature matrix.
-    - Some branches (e.g., handling of covariates or batch effects) may be partially implemented or reserved 
-      for future extension.
+    - Some branches (e.g., handling of covariates or batch effects) are reserved  for future extension.
     """
     
     covariate = torch.empty(0)
