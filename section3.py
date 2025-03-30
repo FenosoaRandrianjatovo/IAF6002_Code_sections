@@ -6,23 +6,23 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     """
-    Main execution block for testing the ET_SNE t-SNE implementation.
+    Main execution block for testing the ET_SNE (t-SNE) implementation.
 
     This script performs the following steps:
-      1. Specifies the dataset name to load (e.g., "make_blobs" or "retina").
-      2. Loads the dataset using the data_load function, generating synthetic data if applicable.
+      1. Specifies the dataset name to load (e.g., "make_blobs" or "retina", "cortex", etc).
+      2. Loads the dataset using the data_load function, generating synthetic data .
       3. Converts the data from a torch.Tensor to a NumPy array.
       4. Initializes the ET_SNE model with specified hyperparameters such as perplexity, learning rate,
          number of iterations, and random state.
-      5. Fits the t-SNE model to the data, obtaining a low-dimensional embedding and recording the KL 
+      5. Fits the Et-SNE model to the data, obtaining a low-dimensional embedding and recording the KL 
          divergence over iterations.
       6. Visualizes the KL divergence over iterations, saving the plot as "KL_divergence.png".
       7. Visualizes the 2D t-SNE embedding, coloring points by their label, and saves the plot as "tSNE.png".
 
-    This block serves as an example of how to run the ET_SNE model from scratch on a given dataset.
+    This block serves as an example of how to run the ET_SNE model from scratch on a given  make blobs dataset.
     """
     
-    # Set the dataset name; try "make_blobs" or test with "retina"
+    # Set the dataset name; try "make_blobs" or test with "retina", "cortex"
     name = "make_blobs"
     
     # Load the dataset based on the specified name and parameters.
@@ -47,10 +47,10 @@ if __name__ == "__main__":
         verbose=True
     )
     
-    # Run t-SNE to obtain the low-dimensional embedding and record KL divergence history
+    # Run Et-SNE to obtain the low-dimensional embedding and record KL divergence history
     y, KL_array = model.fit_trasform(X_samples)
     
-    # Visualize the KL divergence over iterations
+    # Visualize and save  the KL divergence over iterations
     plt.figure(figsize=(10, 7))
     plt.plot(KL_array)
     plt.title("KL-divergence", fontsize=10)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     plt.savefig("KL_divergence.png")
     plt.close()
     
-    # Visualize the 2D t-SNE embedding with points colored by their labels
+    # Visualize and save the 2D t-SNE embedding with points colored by their labels
     plt.figure(figsize=(10, 7))
     plt.scatter(y[:, 0], y[:, 1], c=labels.astype(int), cmap='tab10', s=10)
     plt.title("tSNE from Scratch", fontsize=10)
