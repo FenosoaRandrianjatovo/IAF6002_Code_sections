@@ -10,7 +10,33 @@ from torch.utils.data import DataLoader, TensorDataset
 
 
 def preprocessing(adata, batch_key=None):
-    """Preprocesses the dataset by filtering genes, normalizing, and selecting highly variable genes."""
+    """
+    Preprocess an AnnData object by filtering genes, normalizing counts, applying logarithmic transformation, 
+    and selecting highly variable genes.
+
+    This function executes the following steps on the provided dataset:
+      1. Filters genes with fewer than 3 counts across all cells using `sc.pp.filter_genes`.
+      2. Saves a copy of the original counts from `adata.X` into the "counts" layer to preserve raw data.
+      3. Normalizes total counts per cell to a target sum of 10,000 to standardize sequencing depth.
+      4. Applies a log(1+x) transformation to the normalized data to stabilize variance.
+      5. Freezes the current state of the data by assigning it to `adata.raw` for downstream analysis.
+      6. Identifies and subsets the top 1,200 highly variable genes using the "seurat_v3" method on the preserved counts layer.
+         An optional `batch_key` can be provided to account for batch effects during variable gene selection.
+
+    Parameters
+    ----------
+    adata : AnnData
+        An annotated data matrix containing raw gene expression counts in `adata.X`.
+    batch_key : str, optional
+        The key in `adata.obs` that identifies batch labels for cells. This is used to adjust for batch effects 
+        during the selection of highly variable genes.
+
+    Returns
+    -------
+    AnnData
+        The processed AnnData object, which includes normalized, log-transformed data in `adata.X`, a backup of raw 
+        counts in `adata.layers["counts"]`, the original state saved in `adata.raw`, and a subset of highly variable genes.
+    """
     sc.pp.filter_genes(adata, min_counts=3)
     adata.layers["counts"] = adata.X.copy()  # Preserve counts
     sc.pp.normalize_total(adata, target_sum=1e4)
@@ -26,6 +52,7 @@ def preprocessing(adata, batch_key=None):
         batch_key=batch_key
     )
     return adata
+
 
 
 def data_load(data_name, batch_size=16, cov=False, n_samples=40000, n_features=100, centers=5, cluster_std=1.0):
