@@ -283,11 +283,38 @@ class ET_SNE:
     
     def fit_trasform(self, X, y=None):
         """
-        Fit the t-SNE model to the data.
-        Parameters:
-        X : array-like, shape (n_samples, n_features)
-            Input data.
-        """ 
+        Fit the Et-SNE model to the data and transform it into a low-dimensional embedding.
+    
+        This method performs the following steps:
+          1. Validates the input data ensuring it is a non-empty 2D array with at least two samples.
+          2. Computes the squared pairwise Euclidean distance matrix from the input data.
+          3. Initializes t-SNE parameters such as the number of samples, features, and components.
+          4. Computes the high-dimensional probability matrix P using a binary search to determine optimal sigmas.
+          5. Initializes the low-dimensional embedding Y with normally distributed random values.
+          6. Performs gradient descent for a fixed number of iterations (self.n_iter), updating Y to minimize the 
+             Kullback-Leibler divergence between the high-dimensional and low-dimensional distributions.
+          7. Optionally prints the KL divergence every 50 iterations if verbose output is enabled.
+        
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            The input data matrix where each row represents a sample and each column represents a feature.
+        y : array-like, optional
+            Target values (not used in this transformation but included for API consistency).
+    
+        Returns
+        -------
+        Y : np.ndarray of shape (n_samples, n_components)
+            The low-dimensional embedding of the input data after t-SNE transformation.
+        KL_array : np.ndarray
+            An array containing the Kullback-Leibler divergence value at each iteration of the gradient descent,
+            which can be used to monitor convergence.
+    
+        Raises
+        ------
+        ValueError
+            If the input data X is None, empty, not a 2D array, or contains fewer than two samples.
+        """
         # Check if the input data is valid
         if X is None or len(X) == 0:
             raise ValueError("Input data cannot be None or empty.")
