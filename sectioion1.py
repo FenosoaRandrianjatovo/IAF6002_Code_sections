@@ -127,23 +127,54 @@ class ET_SNE:
 
     def binary_search_sigma(self, dist):
         """
-        Compute sigma for each row of distance matrix
+        Compute per-sample sigma values and the corresponding high-dimensional probability matrix from a distance matrix.
+    
+        For each row in the provided distance matrix, this function calculates a sigma value such that the 
+        computed perplexity (using a Gaussian kernel) approximates a target perplexity (self.PERPLEXITY). 
+        It performs a binary search to solve for sigma by iteratively adjusting the search interval until the 
+        perplexity computed from the row's probability distribution is within a small tolerance of the target value.
+        
+        The computed sigma is then used to generate a normalized probability distribution for that row. 
+        After processing all rows, the final high-dimensional probability matrix is symmetrized by averaging 
+        with its transpose.
+    
+        Parameters
+        ----------
+        dist : np.ndarray
+            A 2D array of pairwise Euclidean distances between samples. Each row corresponds to distances 
+            from a specific sample to all other samples.
+    
+        Returns
+        -------
+        P : np.ndarray
+            The symmetrized high-dimensional probability matrix, where each entry represents the conditional 
+            probability computed using a Gaussian kernel with the corresponding sigma.
+        sigma_array : np.ndarray
+            A 1D array of sigma values for each sample, derived from the binary search process to match the 
+            target perplexity.
+    
+        Notes
+        -----
+        - The function assumes that `self.n_samples` defines the number of rows/samples in the distance matrix.
+        - The target perplexity is defined as `self.PERPLEXITY`.
+        - Progress is printed every 100 cells if `self.verbose` is True.
         """
-        n =self.n_samples
-        prob = np.zeros((n,n))
+        n = self.n_samples
+        prob = np.zeros((n, n))
         sigma_array = []
         for dist_row in range(n):
             func = lambda sigma: self._perplexity(self.prob_high_dim(dist, sigma, dist_row))
             binary_search_result = self.sigma_binary_search(func, self.PERPLEXITY)
-            prob[dist_row] = self.prob_high_dim(dist,binary_search_result, dist_row)
+            prob[dist_row] = self.prob_high_dim(dist, binary_search_result, dist_row)
             sigma_array.append(binary_search_result)
             if self.verbose and (dist_row + 1) % 100 == 0:
                 print("Sigma binary search finished {0} of {1} cells".format(dist_row + 1, n))
-
+    
         sigma_array = np.array(sigma_array)
-        # Compute the final probability matrix
-        P = prob + np.transpose(prob)/ (n*2)
+        # Compute the final symmetrized probability matrix
+        P = (prob + np.transpose(prob)) / (n * 2)
         return P, sigma_array
+
     
    
     def prob_low_dim(self,Y):
