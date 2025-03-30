@@ -10,15 +10,7 @@ if __name__ == "__main__":
 
     name = "make_blobs"
 
-
-    df, labels = make_blobs(
-        n_samples=800, # Total number of samples
-        n_features=30, #Number of features
-        centers= 5   , #Number of classes
-        cluster_std=1,  # Adjust for more or less separation
-        random_state=42
-    )
-    X_samples = pd.DataFrame(df).values
+    X_samples,  labels, dataloader, data_tensor, dataloader_full = data_load(data_name = name,  n_samples=8000, n_features=30, centers=5, cluster_std=1.0)
     # y= labels
     model = ET_SNE(n_components=2, perplexity=30, n_iter=400, random_state=128, learning_rate=0.6, verbose=True)
     y, KL_array = model.fit_trasform(X_samples)
