@@ -205,13 +205,34 @@ class ET_SNE:
         np.fill_diagonal(inv_distances, 0.)
         return inv_distances / np.sum(inv_distances, axis=1, keepdims=True)
 
+
     
     def kl_divergence(self, P, Q):
         """
-        Compute KL divergence between two probability matrices
+        Compute the Kullback-Leibler (KL) divergence between two probability distributions.
+    
+        This function calculates the KL divergence between the high-dimensional probability matrix P 
+        and the low-dimensional probability distribution Q, where Q is computed by applying the 
+        low-dimensional probability function (using a Student's t-distribution) to the input Q. 
+        A small constant (0.01) is added to both P and Q inside the logarithm to prevent numerical issues 
+        with log(0).
+    
+        Parameters
+        ----------
+        P : np.ndarray
+            A 2D array representing the high-dimensional probability distribution.
+        Q : np.ndarray
+            A 2D array representing the low-dimensional embedding of the data points. The function 
+            internally transforms this into a probability distribution using `self.prob_low_dim`.
+    
+        Returns
+        -------
+        float
+            The scalar KL divergence value between the two probability distributions.
         """
         Q = self.prob_low_dim(Q)
         return np.sum(P * np.log(P + 0.01) - P * np.log(Q + 0.01))
+
     
     def KL_gradient(self, P, y):
         """
