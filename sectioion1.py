@@ -176,14 +176,35 @@ class ET_SNE:
         return P, sigma_array
 
     
-   
-    def prob_low_dim(self,Y):
+       
+    def prob_low_dim(self, Y):
         """
-        Compute matrix of probabilities q_ij in low-dimensional space
+        Compute the low-dimensional conditional probability matrix for points in embedding space.
+    
+        This function calculates the pairwise similarities in the low-dimensional space using a Student's t-distribution
+        (with one degree of freedom). It computes the inverse distances as:
+        
+            inv_distance = (1 + ||Y_i - Y_j||²)^(-1)
+        
+        The diagonal is set to zero to ignore self-similarity. The resulting matrix is normalized row-wise to form a 
+        valid probability distribution for each point.
+    
+        Parameters
+        ----------
+        Y : np.ndarray
+            A 2D array representing the low-dimensional embeddings of the data points, where each row corresponds 
+            to a point in the embedding space.
+    
+        Returns
+        -------
+        np.ndarray
+            A 2D array of the same shape as the input, where each element represents the normalized probability 
+            (similarity) between points in the low-dimensional space.
         """
         inv_distances = np.power(1 + np.square(euclidean_distances(Y, Y)), -1)
         np.fill_diagonal(inv_distances, 0.)
-        return inv_distances / np.sum(inv_distances, axis = 1, keepdims = True)
+        return inv_distances / np.sum(inv_distances, axis=1, keepdims=True)
+
     
     def kl_divergence(self, P, Q):
         """
