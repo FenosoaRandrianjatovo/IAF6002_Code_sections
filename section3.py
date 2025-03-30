@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
-
+    # Set the name to  make_blobs , we can also test the name="retina"
     name = "make_blobs"
-    # name = "retina"
+    
     #Load the Data set based on the given name
     X,  labels, dataloader, data_tensor, dataloader_full = data_load(data_name = name,  n_samples=8000, n_features=30, centers=5, cluster_std=1.0)
     # y= labels
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     plt.plot(KL_array)
     plt.title("KL-divergence", fontsize = 10)
     plt.xlabel("Iteration", fontsize = 10); plt.ylabel("KL-Divergence", fontsize = 10)
-        # To save the images in the current folder
+    # To save the images in the current folder
     plt.savefig("KL_divergence.png")
     plt.close()
 
