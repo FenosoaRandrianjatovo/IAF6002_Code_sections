@@ -66,12 +66,29 @@ class ET_SNE:
         return prob_not_symmetr
 
     
-  
-    def _perplexity(self,prob):
+      
+    def _perplexity(self, prob):
         """
-        Compute perplexity (scalar) for each 1D array of high-dimensional probability
+        Compute the perplexity of a high-dimensional probability distribution.
+    
+        The perplexity is a measure of the effective number of neighbors and is defined as 2 raised to the
+        entropy of the probability distribution. This function calculates the entropy using base-2 logarithms,
+        while ignoring any zero values to avoid undefined logarithms, and then returns the perplexity as:
+        
+            perplexity = 2^(entropy)
+        
+        Parameters
+        ----------
+        prob : array-like of float
+            A 1D array representing the probability distribution for which to compute the perplexity.
+    
+        Returns
+        -------
+        float
+            The perplexity computed from the probability distribution.
         """
-        return np.power(2, -np.sum([p*np.log2(p) for p in prob if p!=0]))
+        return np.power(2, -np.sum([p * np.log2(p) for p in prob if p != 0]))
+
     
     
     def sigma_binary_search(self,perp_of_sigma, fixed_perplexity):
