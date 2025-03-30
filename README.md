@@ -38,7 +38,7 @@ $$
 En utilisant cette hypothèse gaussienne, la probabilité conditionnelle que le point $x_i$ choisisse $x_j$ comme voisin est définie en normalisant le terme exponentiel sur tous les autres points :
 
 $$
-p_{j|i} = \frac{\exp\!\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right)}{\sum_{k \neq i} \exp\!\left(-\frac{\|x_i - x_k\|^2}{2\sigma_i^2}\right)}.
+p_{j|i} = \frac{\exp\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right)}{\sum_{k \neq i} \exp\left(-\frac{\|x_i - x_k\|^2}{2\sigma_i^2}\right)}.
 $$
 
 Pour obtenir une probabilité jointe symétrique entre $x_i\) et \(x_j$, t-SNE définit
