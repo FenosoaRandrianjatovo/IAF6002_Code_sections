@@ -1,9 +1,8 @@
-from models._etsne import ET_SNE,  ETSNE
-from dataset import data_load, seed_
+from models._etsne import ET_SNE,  ETSNE #Those Class are  found in section 1
+from dataset import data_load, seed_  # Those Fuction are in section 2
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.datasets import make_blobs
-import pandas as pd
+
 
 
 if __name__ == "__main__":
