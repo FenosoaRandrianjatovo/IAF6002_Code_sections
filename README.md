@@ -1,4 +1,4 @@
-## IAF6002 Code section
+# IAF6002 Code section
 
 
 
@@ -12,6 +12,8 @@
     </td>
   </tr>
 </table>
+
+![Image](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/image1.png)
 
 
 
