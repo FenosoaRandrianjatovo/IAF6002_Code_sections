@@ -13,7 +13,7 @@
   </tr>
 </table>
 
-![Image]([https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/image1.png](https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40ahmadsabry678%2Fanova-tests-what-they-are-how-to-use-them-and-when-660b3a0496c6&psig=AOvVaw1-wpjdMKipjpVQf1ygTcTT&ust=1744140572967000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKDyhozUxowDFQAAAAAdAAAAABAE))
+![Image](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/image1.png)
 
 
 
