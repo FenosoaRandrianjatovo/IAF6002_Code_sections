@@ -28,7 +28,7 @@ Dans Et-SNE, la similarité entre des points en haute dimension est mesurée à 
 Pour chaque point de données en haute dimension $x_i \in \mathbb{R}^d$, nous supposons que la similarité de tout autre point $x_j$ est donnée par une densité gaussienne centrée en $x_i$ avec une variance $\sigma_i^2$. Autrement dit, nous modélisons la densité de probabilité (non normalisée) comme :
 
 $$
-f(x_j \mid x_i) = \frac{1}{(2\pi\sigma_i^2)^{d/2}} \exp\left(-\frac{\|x_i - x_j\|^2}{2\sigma_i^2}\right).
+f(x_j \mid x_i) = \frac{1}{(2\pi\sigma_i^2)^{d/2}} \exp\left(-\frac{\||x_i - x_j\||^2}{2\sigma_i^2}\right).
 $$
 
 - **Centre :** La gaussienne est centrée en $x_i$, ce qui signifie que la similarité est basée sur la distance $\|x_i - x_j\|$.
