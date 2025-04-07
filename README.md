@@ -15,8 +15,6 @@
 
 ![Image](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/image1.png)
 
-
-
 # Section 1
 
 **L’objectif de cette [section 1](https://github.com/FenosoaRandrianjatovo/IAF6002_Code_sections/blob/main/sectioion1.py)**   est de coder les équations (1) à (6), qui servent à minimiser la divergence de Kullback-Leibler, et d’enregistrer leurs valeurs pour observer leur décroissance.
